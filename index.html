@@ -29,8 +29,9 @@
 
         <!-- content -->
         <div class="container m-auto m-auto p-0 m-xs-0">
-            <!-- intro -->
-            <div id="#intro" class="card">
+
+            <!-- Intro Card - to be hidden while playing-->
+            <div id="#intro" class="card hide">
                 <div class="card-header bg-dark text-light text-center">
                     <h1>Quiz Game</h1>
                 </div>
@@ -48,6 +49,18 @@
                 </div>
             </div>
 
+            <!-- Questions Card -->
+            <div id="#intro" class="card">
+                <div class="card-header bg-dark text-light text-center">
+                    <span id="questionSpan">Question will go here via javascript</span>
+                </div>
+                <div class="card-body p-3 bg-light text-center">
+                    <span id="#choiceSpan">answers will go here via javascript</span>
+                </div>
+                <div class="card-footer bg-light text-center">
+                    <span id="answerSpan">Result of Answer will go here via javascript</span>
+                </div>
+            </div>
 
 
         </div>
