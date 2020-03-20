@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #556;
+}
+
+#timerBar{
+    position:relative;
+    border:1px solid #eee;
+    width:200px;
+    height:100%;
+    border-radius:3px;
+}
+
+#timerFill{
+    position: absolute;
+    height:100%;
+    width:100%;
+    background:#050;
+}
+
+.zind2{
+    z-index:2;
+    position:relative;
+}
+
+.hide {
+    display: none;
+  }

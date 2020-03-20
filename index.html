@@ -1,14 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100 w-100">
     <head>
         <title>Quiz Game</title>
 
         <!-- CSS Links -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="styles.css">
     </head>
-    <body>
+    <body class="d-flex flex-column h-100 w-100 mx-auto">
+
+        <!-- Header box contains highscore link, and timer display -->
+        <header>
+            <div class="container-fluid bg-dark clearfix">
+                <!-- high score link floats left-->
+                <div class="text-light float-left">
+                    HighScores
+                </div>
+                <!-- Timer box floats right -->
+                <div class="text-light float-right">
+                    <div id="timerBar" class="text-center m-1">
+                        <div id="timerFill"></div>         <!-- percent of the time remaining-->
+                        <span class="zind2">Timer:</span>
+                        <span id="timeSpan" class="zind2">00</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <!-- content -->
+        <div class="container m-auto m-auto p-0 m-xs-0">
+            <!-- intro -->
+            <div id="#intro" class="card">
+                <div class="card-header bg-dark text-light text-center">
+                    <h1>Quiz Game</h1>
+                </div>
+                <div class="card-body p-3">
+                    <p>
+                        Try to answer the questions as quickly as possible.  
+                     </p>
+                     <p>
+                         An incorrect answer will decrease your remain time by 5 seconds.
+                     </p>
+                     <p>
+                         Your remaining time will be converted to points at the end of the game, and your score will be submitted
+                         to our high score board.
+                     </p>
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- Footer -->
+        <footer class="footer mt-auto">
+            <div class="container-fluid bg-dark">
+                <div class="inner text-light text-center">
+                    <span>
+                        &copy;Brian Fairbanks 2020
+                    </span>
+                </div>
+            </div>
+        </footer>
+
 
         <!-- JS Links -->
         <script type="text/javascript" src="./scripts.js"></script>
