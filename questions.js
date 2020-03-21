@@ -22,12 +22,12 @@ const questions=[
     },
     {
         question: "Choose the correct HTML element to define important text",
-        choices: ["<important","<i>","<strong>","<b>"],
+        choices: ["<important>","<i>","<strong>","<b>"],
         answer:2
     },
     {
         question: "Choose the correct HTML element to define bold text",
-        choices: ["<important","<i>","<strong>","<b>"],
+        choices: ["<important>","<i>","<strong>","<b>"],
         answer:3
     },
     {
@@ -47,7 +47,7 @@ const questions=[
     },
     {
         question: "What is the correct HTML for adding a background color?" ,
-        choices: ["<background>yellow</background>","<body style=\"background-color:yellow;\"","body bg=\"yellow\">"],
+        choices: ["<background>yellow</background>","<body style=\"background-color:yellow;\">","body bg=\"yellow\">"],
         answer:1
     },
     {
