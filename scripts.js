@@ -26,6 +26,7 @@ var retryBtn = document.getElementById("retryBtn");
 var reviewBtn =  document.getElementById("reviewBtn");
 
 var reviewCard = document.getElementById("review");
+var reviewDiv = document.getElementById("reviewDiv");
 var resultRtrn = document.getElementById("resultRtrn");
 
 var allCards=[introCard, questionCard, resultsCard, reviewCard];
@@ -96,7 +97,29 @@ function showResults(){
 
 
 function showReview(){
+    // clear prev
+    reviewDiv.innerHTML="";
+    //print every question asked
+    var reviewAllDiv = document.createElement("div");
 
+    for(var i=0; i<questionsAsked.length -1; i++){      //-1, since the last question to render wasnt answered
+        var curAnsDiv = document.createElement("div");
+        curAnsDiv.classList.add("card", "my-2");
+
+        curQuestion = questions[questionsAsked[i]];
+
+        var ansHeader = document.createElement("H5");
+        ansHeader.textContent = curQuestion.question;
+        curAnsDiv.appendChild( ansHeader )
+
+        //append all answers, by passing highlighting in the forReview object
+        
+        curAnsDiv.appendChild( displayChoices( {is:true, answer:curQuestion.answer, choice: parseInt(answersGiven[i]) } ) );
+
+        reviewAllDiv.appendChild(curAnsDiv);
+        
+    }
+    reviewDiv.appendChild(reviewAllDiv);
     //change to reviewCard
     changeCard(reviewCard);
 }
@@ -144,8 +167,11 @@ function choiceMade(event){
 }
 
 
+// Takes an object for if for review or not
+// this boolean defaults to {false} and irrelevent values if not passed
 // returns a div containing an array of divs with all the answers
-function displayChoices(){
+// or optionally highlighted selections if forReview
+function displayChoices(forReview = {is:false, answer:-1, choice:-1}){
     //display the answers in random order, but maintain ids
     var choiceLength = curQuestion.choices.length;
     var choiceUsed = []
@@ -166,18 +192,34 @@ function displayChoices(){
         //add this to the used answer list
         choiceUsed.push(curChoice)
 
-        // create a button to select the choice, and set its values
-        var button = document.createElement("BUTTON");
-        button.classList.add("btn","btn-primary","choice");
-        button.setAttribute("id",curChoice);
-        button.textContent = String.fromCharCode( 65+i );        // assign a letter to the button, A/B/C..
+        // if not generating for review purposes
+        if(!forReview.is){
+            // create a button to select the choice, and set its values
+            var button = document.createElement("BUTTON");
+            button.classList.add("btn","btn-primary","choice");
+            button.setAttribute("id",curChoice);
+            button.textContent = String.fromCharCode( 65+i );        // assign a letter to the button, A/B/C..
+
+            //add the button to the choice div
+            choiceDiv.appendChild(button);
+        }
 
         // create a label to go next to the button
         var span = document.createElement("span");
         span.textContent=curQuestion.choices[curChoice];
 
-        //add the button & label to the choice div
-        choiceDiv.appendChild(button);
+        // add highlighting if for review
+        console.log(forReview);
+        if(forReview.is){
+            if(curChoice==forReview.answer){
+                span.classList.add("correctAns");
+            }
+            if(curChoice==forReview.choice && forReview.choice!=forReview.answer){
+                span.classList.add("wrongChoice");
+            }
+        }
+
+        //add the label to the choice div
         choiceDiv.appendChild(span);
 
         //then add to choiceSpan in html
