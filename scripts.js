@@ -23,6 +23,14 @@ var choiceBtns;
 var resultsCard = document.getElementById("results");
 var scoreSpan = document.getElementById("scoreSpan");
 var retryBtn = document.getElementById("retryBtn");
+var reviewBtn =  document.getElementById("reviewBtn");
+
+var reviewCard = document.getElementById("review");
+var resultRtrn = document.getElementById("resultRtrn");
+
+var allCards=[introCard, questionCard, resultsCard, reviewCard];
+var lastCard; // this will always be where the cards start on a new refresh
+var curCard = introCard;
 
 var score=0;
 var wrong=0;
@@ -31,8 +39,12 @@ var answersGiven=[];
 
 // ========== Functions =================
 //========================================
-function toggleVisible(thisElem){
-    thisElem.classList.toggle("hide")
+function changeCard(thisElem){
+    lastCard = curCard;
+    curCard = thisElem;
+    
+    lastCard.classList.add("hide")
+    thisElem.classList.remove("hide");
 }
 
 function renderTimer(){
@@ -74,19 +86,24 @@ function updateTimer(){
 
 
 function showResults(){
-    toggleVisible(questionCard);
-
+    //set up values for results
     var scoreString = ""+score+"/"+(score+wrong)+"\n"+Math.floor((score/(score+wrong))*100)+"%";
     scoreSpan.textContent = scoreString;
 
+    // change to resultsCard
+    changeCard(resultsCard);
+}
 
-    toggleVisible(resultsCard);
+
+function showReview(){
+
+    //change to reviewCard
+    changeCard(reviewCard);
 }
 
 
 function toIntro(){
-    toggleVisible(resultsCard);
-    toggleVisible(introCard);
+    changeCard(introCard);
     // reset timer to default settings
     time = startTime; // starting timer at 60 seconds, plus
     renderTimer();
@@ -170,8 +187,6 @@ function displayChoices(){
 }
 
 function nextQuestion(){
-    //hide the card
-    toggleVisible(questionCard);
     // clear the fields
     choiceSpan.innerHTML="";
 
@@ -183,9 +198,10 @@ function nextQuestion(){
     questionsAsked.push(nextQuest);
     curQuestion = questions[nextQuest];
 
-    // display question
+    // add question to DOM
     questionSpan.textContent = curQuestion.question;
 
+    // add choices, a complex series of divs and butttons, to the DOM
     choiceSpan.appendChild( displayChoices() );
 
     //with new buttons, they all need to add event listeners
@@ -193,18 +209,13 @@ function nextQuestion(){
     for (var i = 0; i < choiceBtns.length; i++) {
         choiceBtns[i].addEventListener("click",choiceMade);
     }
-
-    //show the card
-    toggleVisible(questionCard);
 }
 
 
 function startGame(){
-    toggleVisible(introCard);
-    toggleVisible(questionCard);
-
     timer=setInterval(updateTimer,1000);
     nextQuestion();
+    changeCard(questionCard);
 }
 
 // ========== Main ======================
@@ -214,3 +225,5 @@ window.addEventListener("load",renderTimer);
 
 startBtn.addEventListener("click", startGame);
 retryBtn.addEventListener("click", toIntro);
+resultRtrn.addEventListener("click", ()=>{ changeCard(lastCard); });
+reviewBtn.addEventListener("click", showReview);
