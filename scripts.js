@@ -2,7 +2,7 @@
 //========================================
 
 // Constants
-const startTime = 10;
+const startTime = 60;
 
 // these questions are stored in an array of objects
 const questions=[
@@ -99,18 +99,31 @@ function toIntro(){
     //reset score
     score=0;
     wrong=0;
+    //reset answer
+    answerSpan.textContent="";
+    answerSpan.style.color="#000";
+    questionCard.classList.remove("correct","wrong");
 }
 
 
 function choiceMade(event){
+    questionCard.classList.remove("correct","wrong");
+
     var choice = event.target.id;
-    console.log(choice +" : "+curQuestion.answer)
+    //Correct Answer
     if(choice == curQuestion.answer){
         score+=1
+        answerSpan.textContent="Correct!";
+        answerSpan.style.color="#050";
+        questionCard.classList.add("correct");
     }
+    //Wrong Answer
     else{
         wrong++;
         time-=5;
+        answerSpan.textContent="Wrong.";
+        answerSpan.style.color="#500";
+        questionCard.classList.add("wrong");
     }
     nextQuestion();
 }
