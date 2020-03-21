@@ -72,9 +72,7 @@ function updateTimer(){
     //if the time is out, end the game
     if(time<1){
         time=0;
-        renderTimer();  // one last time so the timer isn't stuck at 1
-        clearInterval(timer);
-        showResults();
+        endGame();
         return;
     }
 
@@ -159,6 +157,7 @@ function choiceMade(event){
     else{
         wrong++;
         time-=5;
+        renderTimer();  // update the new time IMMEDIATELY
         answerSpan.textContent="Wrong.";
         answerSpan.style.color="#500";
         questionCard.classList.add("wrong");
@@ -232,6 +231,11 @@ function nextQuestion(){
     // clear the fields
     choiceSpan.innerHTML="";
 
+    // if out of questions, end the game
+    if(questionsAsked.length == questions.length){
+        endGame();
+    }
+
     //choose a random question that has not been chosen before
     do{
         var nextQuest = Math.floor(Math.random()*questions.length);
@@ -253,6 +257,11 @@ function nextQuestion(){
     }
 }
 
+function endGame(){
+    renderTimer();  // one last time so the timer isn't stuck at 1
+    clearInterval(timer);
+    showResults();
+}
 
 function startGame(){
     timer=setInterval(updateTimer,1000);
