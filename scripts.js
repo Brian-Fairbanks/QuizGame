@@ -4,94 +4,6 @@
 // Constants
 const startTime = 60;
 
-// these questions are stored in an array of objects
-const questions=[
-    {
-        question: "The answer is #3",
-        choices: ["choose not thou 1","neither choose thou 2","accepting then that thou choose 3","4 is right out"],
-        answer: 2 // remember that index start at 0
-    },
-    {
-        question: "What does HTML stand for?",
-        choices: ["Hyperlinks and Text Markdown Language","Hyper Text Markup Language","Home Tool Markdown Language", "Hyperlinked and Tooled Markup Language"],
-        answer: 1 // remember that index start at 0
-    },
-    {
-        question: "Who is making the Web standards?",
-        choices: ["The World Wide Web Consortium", "Microsoft", "Google","Mozilla"],
-        answer:0
-    },
-    {
-        question: "Choose the correct HTML element for the largest heading:",
-        choices: ["<heading>", "<h6>", "<head>", "<h1>"],
-        answer: 3
-    },
-    {
-        question: "Choose the correct HTML element to define important text",
-        choices: ["<important","<i>","<strong>","<b>"],
-        answer:2
-    },
-    {
-        question: "Choose the correct HTML element to define bold text",
-        choices: ["<important","<i>","<strong>","<b>"],
-        answer:3
-    },
-    {
-        question: "What is the correct HTML element for inserting a line break?",
-        choices: ["<break>","<lb>","<br>","<\\n"],
-        answer:2
-    },
-    {
-        question: "Choose the correct HTML element to define emphasized text",
-        choices: ["<em>","<italic>","<emphasize>","<i>"],
-        answer:0
-    },
-    {
-        question: "Choose the correct HTML element to define italicized text",
-        choices: ["<em>","<italic>","<emphasize>","<i>"],
-        answer:3
-    },
-    {
-        question: "What is the correct HTML for adding a background color?" ,
-        choices: ["<background>yellow</background>","<body style=\"background-color:yellow;\"","body bg=\"yellow\">"],
-        answer:1
-    },
-    {
-        question: "What is the correct HTML for creating a hyperlink?",
-        choices: ["<a name=\"http://www.placeholder.com\">link</a>","<a href=\"http://www.placeholder.com\">link</a>","<a src=\"http://www.placeholder.com\">link</a>","<a url=\"http://www.placeholder.com\">link</a>"],
-        answer:1
-    },
-    {
-        question: "Which character is used to indicate an end tag?",
-        choices: ["^","<","/","*"],
-        answer:2
-    },
-    {
-        question: "How can you open a link in a new tab/browser window?",
-        choices: ["<a href=\"url\" target=\"_blank\">", "<a href=\"url\" target=\"new\">", "<a href=\"url\" tab=\"new\"","<a href=\"url\" new"],
-        answer:0
-    },
-    {
-        question: "Which of these elements are all <table> elements?",
-        choices: ["<table><head><tfoot>","<thead><body><tr>","<table><tr><tt>","<table><tr><td>"],
-        answer:3
-    },
-    {
-        question: "How can you make a numbered list?",
-        choices: ["<ol>","<ul>","<nl>","<#l>"],
-        answer:0
-    },
-    {
-        question: "How can you make a bulleted list?",
-        choices: ["<ol>","<ul>","<nl>","<bl>"],
-        answer:1
-    },
-    {
-        question: "What is the correct HTML for inserting an image?",
-        choices: [ "<img src=\"image.gif\" alt=\"MyImage\">", "<image src=\"image.gif\" alt=\"MyImage\">", "<img href=\"image.gif\" alt=\"MyImage\">", "<img alt=\"MyImage\">image.gif</img>"],
-        answer:0
-    }
-]
 // Others
 var timerFill = document.getElementById("timerFill");
 var timerSpan = document.getElementById("timerSpan");
@@ -194,6 +106,8 @@ function choiceMade(event){
     questionCard.classList.remove("correct","wrong");
 
     var choice = event.target.id;
+    // add to answers give
+    answersGiven.push(choice);
     //Correct Answer
     if(choice == curQuestion.answer){
         score+=1
@@ -213,28 +127,17 @@ function choiceMade(event){
 }
 
 
-function nextQuestion(){
-    //hide the card
-    toggleVisible(questionCard);
-    // clear the fields
-    choiceSpan.innerHTML="";
-
-    //choose a random question that has not been chosen before
-    do{
-        var nextQuest = Math.floor(Math.random()*questions.length);
-    }
-    while( questionsAsked.indexOf(nextQuest)!=-1);
-    questionsAsked.push(nextQuest);
-    curQuestion = questions[nextQuest];
-
-    // display question
-    questionSpan.textContent = curQuestion.question;
-
+// returns a div containing an array of divs with all the answers
+function displayChoices(){
     //display the answers in random order, but maintain ids
     var choiceLength = curQuestion.choices.length;
     var choiceUsed = []
+
+    //create a new div to contain all of the choices
+    var allChoiceDiv = document.createElement("div");
+
     for (var i=0; i< choiceLength; i++){
-        //create new div to hold a choice, and set its class
+        //create new div to hold a single choice, and set its class
         var choiceDiv = document.createElement("div");
 
         //get a random number that hasn't been used
@@ -261,8 +164,29 @@ function nextQuestion(){
         choiceDiv.appendChild(span);
 
         //then add to choiceSpan in html
-        choiceSpan.appendChild(choiceDiv);
+        allChoiceDiv.appendChild(choiceDiv);
     }
+    return allChoiceDiv;
+}
+
+function nextQuestion(){
+    //hide the card
+    toggleVisible(questionCard);
+    // clear the fields
+    choiceSpan.innerHTML="";
+
+    //choose a random question that has not been chosen before
+    do{
+        var nextQuest = Math.floor(Math.random()*questions.length);
+    }
+    while( questionsAsked.indexOf(nextQuest)!=-1);
+    questionsAsked.push(nextQuest);
+    curQuestion = questions[nextQuest];
+
+    // display question
+    questionSpan.textContent = curQuestion.question;
+
+    choiceSpan.appendChild( displayChoices() );
 
     //with new buttons, they all need to add event listeners
     choiceBtns = document.querySelectorAll(".choice");
