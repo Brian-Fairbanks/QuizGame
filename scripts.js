@@ -2,17 +2,19 @@
 //========================================
 
 // Constants
-const startTime = 60;
+const startTime = 90;
 
-// Others
+// Timer inputs and settigns
 var timerFill = document.getElementById("timerFill");
 var timerSpan = document.getElementById("timerSpan");
 var time=startTime;
 var timer;
 
+// Intro Card and inputs
 var introCard = document.getElementById("intro");
 var startBtn = document.getElementById("startBtn");
 
+// Question Card and inputs
 var questionCard = document.getElementById("questions");
 var questionSpan = document.getElementById("questionSpan");
 var choiceSpan = document.getElementById("choiceSpan");
@@ -20,23 +22,32 @@ var answerSpan = document.getElementById("answerSpan");
 var curQuestion;
 var choiceBtns;
 
+// Results Card and inputs
 var resultsCard = document.getElementById("results");
+var correctSpan = document.getElementById("correctSpan");
+var totalSpan = document.getElementById("totalSpan");
+var percentSpan = document.getElementById("percentSpan");
 var scoreSpan = document.getElementById("scoreSpan");
 var retryBtn = document.getElementById("retryBtn");
 var reviewBtn =  document.getElementById("reviewBtn");
 
+// review card and inputs
 var reviewCard = document.getElementById("review");
 var reviewDiv = document.getElementById("reviewDiv");
 var resultRtrn = document.getElementById("resultRtrn");
 
+// card navigation variables
 var allCards=[introCard, questionCard, resultsCard, reviewCard];
 var lastCard; // this will always be where the cards start on a new refresh
 var curCard = introCard;
 
+// game specific variables.  these get reset each time the game starts.
 var score=0;
+var right=0;
 var wrong=0;
 var questionsAsked=[];
 var answersGiven=[];
+
 
 // ========== Functions =================
 //========================================
@@ -86,8 +97,17 @@ function updateTimer(){
 
 function showResults(){
     //set up values for results
-    var scoreString = ""+score+"/"+(score+wrong)+"\n"+Math.floor((score/(score+wrong))*100)+"%";
-    scoreSpan.textContent = scoreString;
+    // var scoreString = ""+right+"/"+(right+wrong)+"\n"+Math.floor((right/(right+wrong))*100)+"%";
+    // scoreSpan.textContent = scoreString;
+    
+    var total = right+wrong;
+    var percent = (100*(right/total)).toFixed(2);
+
+    correctSpan.textContent=right;
+    totalSpan.textContent=total;
+    percentSpan.textContent=percent;
+
+    scoreSpan.textContent = score;
 
     // change to resultsCard
     changeCard(resultsCard);
@@ -123,17 +143,21 @@ function showReview(){
 }
 
 
-function toIntro(){
+function showIntro(){
     changeCard(introCard);
+
     // reset timer to default settings
-    time = startTime; // starting timer at 60 seconds, plus
+    time = startTime; // reset timer to max time
     renderTimer();
-    //reset score
-    score=0;
+
+    //reset score and answered lists
+    var score=0;
+    right=0;
     wrong=0;
     questionsAsked=[];
     answersGiven=[];
-    //reset answer
+
+    //reset answer text
     answerSpan.textContent="";
     answerSpan.style.color="#000";
     questionCard.classList.remove("correct","wrong");
@@ -141,14 +165,17 @@ function toIntro(){
 
 
 function choiceMade(event){
+    //clear the right/wrong from the previous question, so it can be reset
     questionCard.classList.remove("correct","wrong");
 
+    //get id of the users choice, and add it to their given answers
     var choice = event.target.id;
-    // add to answers give
     answersGiven.push(choice);
-    //Correct Answer
+
+    //Check Answer
     if(choice == curQuestion.answer){
-        score+=1
+        right+=1
+        score+=50; // come back later - write a timer per question, so that each correct answer can give bonus points if answered quickly
         answerSpan.textContent="Correct!";
         answerSpan.style.color="#050";
         questionCard.classList.add("correct");
@@ -162,6 +189,7 @@ function choiceMade(event){
         answerSpan.style.color="#500";
         questionCard.classList.add("wrong");
     }
+    //generate a new question
     nextQuestion();
 }
 
@@ -178,6 +206,7 @@ function displayChoices(forReview = {is:false, answer:-1, choice:-1}){
     //create a new div to contain all of the choices
     var allChoiceDiv = document.createElement("div");
 
+    // generate each answer, and append it to the div
     for (var i=0; i< choiceLength; i++){
         //create new div to hold a single choice, and set its class
         var choiceDiv = document.createElement("div");
@@ -191,7 +220,7 @@ function displayChoices(forReview = {is:false, answer:-1, choice:-1}){
         //add this to the used answer list
         choiceUsed.push(curChoice)
 
-        // if not generating for review purposes
+        // if not generating for review purposes, append a button to select this answer
         if(!forReview.is){
             // create a button to select the choice, and set its values
             var button = document.createElement("BUTTON");
@@ -203,12 +232,11 @@ function displayChoices(forReview = {is:false, answer:-1, choice:-1}){
             choiceDiv.appendChild(button);
         }
 
-        // create a label to go next to the button
+        // create a label showing the answer choice
         var span = document.createElement("span");
         span.textContent=curQuestion.choices[curChoice];
 
-        // add highlighting if for review
-        console.log(forReview);
+        // add highlighting only if for review
         if(forReview.is){
             if(curChoice==forReview.answer){
                 span.classList.add("correctAns");
@@ -221,11 +249,14 @@ function displayChoices(forReview = {is:false, answer:-1, choice:-1}){
         //add the label to the choice div
         choiceDiv.appendChild(span);
 
-        //then add to choiceSpan in html
+        //then add the choice div to choiceSpan in html
         allChoiceDiv.appendChild(choiceDiv);
     }
+
+    // return the fully formed html div
     return allChoiceDiv;
 }
+
 
 function nextQuestion(){
     // clear the fields
@@ -234,6 +265,7 @@ function nextQuestion(){
     // if out of questions, end the game
     if(questionsAsked.length == questions.length){
         endGame();
+        return;
     }
 
     //choose a random question that has not been chosen before
@@ -257,11 +289,13 @@ function nextQuestion(){
     }
 }
 
+
 function endGame(){
     renderTimer();  // one last time so the timer isn't stuck at 1
     clearInterval(timer);
     showResults();
 }
+
 
 function startGame(){
     timer=setInterval(updateTimer,1000);
@@ -269,12 +303,15 @@ function startGame(){
     changeCard(questionCard);
 }
 
+
 // ========== Main ======================
 //========================================
+
 // set the timer to how it should look at the start of the game
 window.addEventListener("load",renderTimer);
 
+// set up constant buttons
 startBtn.addEventListener("click", startGame);
-retryBtn.addEventListener("click", toIntro);
+retryBtn.addEventListener("click", showIntro);
 resultRtrn.addEventListener("click", ()=>{ changeCard(lastCard); });
 reviewBtn.addEventListener("click", showReview);
