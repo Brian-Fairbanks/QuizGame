@@ -2,14 +2,14 @@
 //========================================
 
 // Constants
-const startTime = 60;
+const startTime = 10;
 
 // these questions are stored in an array of objects
 const questions=[
     {
         question: "The answer is #3",
         choices: ["choose not thou 1","neither choose thou 2","accepting then that thou choose 3","4 is right out"],
-        answer: 3
+        answer: 2 // remember that index start at 0
     }
 ]
 // Others
@@ -26,22 +26,19 @@ var questionSpan = document.getElementById("questionSpan");
 var choiceSpan = document.getElementById("choiceSpan");
 var answerSpan = document.getElementById("answerSpan");
 var curQuestion;
+var choiceBtns;
 
 var resultsCard = document.getElementById("results");
 var scoreSpan = document.getElementById("scoreSpan");
 var retryBtn = document.getElementById("retryBtn");
 
 var score=0;
+var wrong=0;
 
 // ========== Functions =================
 //========================================
-function toggleCard(thisCard){
-    thisCard.classList.toggle("hide")
-}
-
-function showResults(){
-    toggleCard(questionCard);
-    toggleCard(resultsCard);
+function toggleVisible(thisElem){
+    thisElem.classList.toggle("hide")
 }
 
 function renderTimer(){
@@ -63,39 +60,65 @@ function renderTimer(){
     timeSpan.textContent = time;
 }
 
-function updateTimer(){
-    //update time bar in top left
-    renderTimer();
 
+function updateTimer(){
     //if the time is out, end the game
     if(time<1){
+        time=0;
+        renderTimer();  // one last time so the timer isn't stuck at 1
         clearInterval(timer);
         showResults();
         return;
     }
+
+    //update time bar in top left
+    renderTimer();
+
     //decrement the time;
     time--;
-    
 }
+
+
+function showResults(){
+    toggleVisible(questionCard);
+
+    var scoreString = ""+score+"/"+(score+wrong)+"\n"+Math.floor((score/(score+wrong))*100)+"%";
+    scoreSpan.textContent = scoreString;
+
+
+    toggleVisible(resultsCard);
+}
+
+
 function toIntro(){
-    toggleCard(resultsCard);
-    toggleCard(introCard);
+    toggleVisible(resultsCard);
+    toggleVisible(introCard);
     // reset timer to default settings
     time = startTime; // starting timer at 60 seconds, plus
     renderTimer();
+    //reset score
+    score=0;
+    wrong=0;
 }
 
-function startGame(){
-    toggleCard(introCard);
-    toggleCard(questionCard);
 
-    timer=setInterval(updateTimer,1000);
+function choiceMade(event){
+    var choice = event.target.id;
+    console.log(choice +" : "+curQuestion.answer)
+    if(choice == curQuestion.answer){
+        score+=1
+    }
+    else{
+        wrong++;
+        time-=5;
+    }
     nextQuestion();
 }
 
+
 function nextQuestion(){
     //hide the card
-    toggleCard(questionCard);
+    toggleVisible(questionCard);
     // clear the fields
     choiceSpan.innerHTML="";
     //choose a random question that has not been chosen before
@@ -123,7 +146,7 @@ function nextQuestion(){
         // create a button to select the choice, and set its values
         var button = document.createElement("BUTTON");
         button.classList.add("btn","btn-primary","choice");
-        button.setAttribute.id="curChoice";
+        button.setAttribute("id",curChoice);
         button.textContent = String.fromCharCode( 65+i );        // assign a letter to the button, A/B/C..
 
         // create a label to go next to the button
@@ -138,8 +161,23 @@ function nextQuestion(){
         choiceSpan.appendChild(choiceDiv);
     }
 
+    //with new buttons, they all need to add event listeners
+    choiceBtns = document.querySelectorAll(".choice");
+    for (var i = 0; i < choiceBtns.length; i++) {
+        choiceBtns[i].addEventListener("click",choiceMade);
+    }
+
     //show the card
-    toggleCard(questionCard);
+    toggleVisible(questionCard);
+}
+
+
+function startGame(){
+    toggleVisible(introCard);
+    toggleVisible(questionCard);
+
+    timer=setInterval(updateTimer,1000);
+    nextQuestion();
 }
 
 // ========== Main ======================
