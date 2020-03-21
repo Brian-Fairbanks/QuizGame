@@ -13,13 +13,13 @@ const questions=[
     },
     {
         question: "What does HTML stand for?",
-        choices: ["Hyperlinks and Text Markup Language","Hyper Text Markup Language","aHome Tool Markup Language"],
+        choices: ["Hyperlinks and Text Markdown Language","Hyper Text Markup Language","Home Tool Markdown Language", "Hyperlinked and Tooled Markup Language"],
         answer: 1 // remember that index start at 0
     },
     {
         question: "Who is making the Web standards?",
         choices: ["The World Wide Web Consortium", "Microsoft", "Google","Mozilla"],
-        answer:
+        answer:0
     },
     {
         question: "Choose the correct HTML element for the largest heading:",
@@ -53,7 +53,7 @@ const questions=[
     },
     {
         question: "What is the correct HTML for adding a background color?" ,
-        choices: ["<background>yellow</background>","<body style-\"background-color:yellow;\"","body bg=\"yellow\">"],
+        choices: ["<background>yellow</background>","<body style=\"background-color:yellow;\"","body bg=\"yellow\">"],
         answer:1
     },
     {
@@ -64,7 +64,7 @@ const questions=[
     {
         question: "Which character is used to indicate an end tag?",
         choices: ["^","<","/","*"],
-        answer:
+        answer:2
     },
     {
         question: "How can you open a link in a new tab/browser window?",
@@ -90,7 +90,7 @@ const questions=[
         question: "What is the correct HTML for inserting an image?",
         choices: [ "<img src=\"image.gif\" alt=\"MyImage\">", "<image src=\"image.gif\" alt=\"MyImage\">", "<img href=\"image.gif\" alt=\"MyImage\">", "<img alt=\"MyImage\">image.gif</img>"],
         answer:0
-    },
+    }
 ]
 // Others
 var timerFill = document.getElementById("timerFill");
@@ -114,6 +114,8 @@ var retryBtn = document.getElementById("retryBtn");
 
 var score=0;
 var wrong=0;
+var questionsAsked=[];
+var answersGiven=[];
 
 // ========== Functions =================
 //========================================
@@ -179,6 +181,8 @@ function toIntro(){
     //reset score
     score=0;
     wrong=0;
+    questionsAsked=[];
+    answersGiven=[];
     //reset answer
     answerSpan.textContent="";
     answerSpan.style.color="#000";
@@ -214,8 +218,14 @@ function nextQuestion(){
     toggleVisible(questionCard);
     // clear the fields
     choiceSpan.innerHTML="";
+
     //choose a random question that has not been chosen before
-    curQuestion = questions[0];
+    do{
+        var nextQuest = Math.floor(Math.random()*questions.length);
+    }
+    while( questionsAsked.indexOf(nextQuest)!=-1);
+    questionsAsked.push(nextQuest);
+    curQuestion = questions[nextQuest];
 
     // display question
     questionSpan.textContent = curQuestion.question;
