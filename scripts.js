@@ -2,7 +2,7 @@
 //========================================
 
 // Constants
-const startTime = 600;
+const startTime = 60;
 
 // these questions are stored in an array of objects
 const questions=[
@@ -102,7 +102,7 @@ function nextQuestion(){
     curQuestion = questions[0];
 
     // display question
-    questionSpan = curQuestion.question;
+    questionSpan.textContent = curQuestion.question;
 
     //display the answers in random order, but maintain ids
     var choiceLength = curQuestion.choices.length;
@@ -122,7 +122,7 @@ function nextQuestion(){
 
         // create a button to select the choice, and set its values
         var button = document.createElement("BUTTON");
-        button.classList.add("choice");
+        button.classList.add("btn","btn-primary","choice");
         button.setAttribute.id="curChoice";
         button.textContent = String.fromCharCode( 65+i );        // assign a letter to the button, A/B/C..
 
