@@ -129,7 +129,7 @@ function updateQuestionTimer(){
         return
     }
     extraPoints-=1;
-    extraPointsSpan.textContent=extraPoints;
+    //extraPointsSpan.textContent=extraPoints;
 
     var timePer = (extraPoints/questionStartPoints)*100;
     extraPointBar.style.width = timePer+"%";
