@@ -17,6 +17,9 @@ function clearhighScores(){
 
 
 function displayHighScores(){
+    //clear before adding to the list
+    highScoreInsert.innerHTML="";
+
     var dscores=document.createElement("div");
     dscores.classList.add("row");
     for (var i=0; i<highScores.length; i++){
@@ -94,6 +97,9 @@ function submitHighScore(){
 
     //overwrite the local storage for highscore
     localStorage.setItem( "highScoreList", JSON.stringify(highScores) );
+    displayHighScores()
+    submitScoreDiv.classList.toggle("hide");
+    scoreSubmittedDiv.classList.toggle("hide");
 }
 
 

@@ -45,6 +45,9 @@ var highScoreInsert = document.getElementById("highScoreInsert");
 var highestScore = document.getElementById("highestScore");
 var submitScore = document.getElementById("submitScore");
 
+var submitScoreDiv = document.getElementById("submitScore");
+var scoreSubmittedDiv = document.getElementById("scoreSubmitted");
+
 
 var returnBtns = document.getElementsByClassName("resultRtrn");
 
@@ -174,6 +177,10 @@ function showIntro(){
     answerSpan.textContent="";
     answerSpan.style.color="#000";
     questionCard.classList.remove("correct","wrong");
+
+    //reset Submit Process
+    submitScoreDiv.classList.toggle("hide");
+    scoreSubmittedDiv.classList.toggle("hide");
 }
 
 
