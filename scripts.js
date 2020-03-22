@@ -4,6 +4,9 @@
 // Constants
 const startTime = 90;
 
+// Error card - should only ever be visable if JS is not enabled/loaded
+var errorCard = document.getElementById("error");
+
 // Timer inputs and settigns
 var timerFill = document.getElementById("timerFill");
 var timerSpan = document.getElementById("timerSpan");
@@ -33,13 +36,23 @@ var reviewBtn =  document.getElementById("reviewBtn");
 
 // review card and inputs
 var reviewCard = document.getElementById("review");
-var reviewDiv = document.getElementById("reviewDiv");
-var resultRtrn = document.getElementById("resultRtrn");
+var reviewDiv = document.getElementById("reviewDiv")
+
+// High Score Card and its Associated inputs
+var highScoreCard = document.getElementById("highScores");
+var highScoresBtn = document.getElementById("highScoresBtn");
+var highScoreInsert = document.getElementById("highScoreInsert");
+var highestScore = document.getElementById("highestScore");
+var submitScore = document.getElementById("submitScore");
+
+
+var returnBtns = document.getElementsByClassName("resultRtrn");
+
 
 // card navigation variables
-var allCards=[introCard, questionCard, resultsCard, reviewCard];
-var lastCard; // this will always be where the cards start on a new refresh
-var curCard = introCard;
+var allCards=[errorCard, introCard, questionCard, resultsCard, reviewCard, highScoreCard];
+var lastCard;
+var curCard = errorCard; // this will always be where the cards start on a new refresh
 
 // game specific variables.  these get reset each time the game starts.
 var score=0;
@@ -309,9 +322,14 @@ function startGame(){
 
 // set the timer to how it should look at the start of the game
 window.addEventListener("load",renderTimer);
+window.addEventListener("load",changeCard(introCard));
 
 // set up constant buttons
 startBtn.addEventListener("click", startGame);
 retryBtn.addEventListener("click", showIntro);
-resultRtrn.addEventListener("click", ()=>{ changeCard(lastCard); });
 reviewBtn.addEventListener("click", showReview);
+
+// set up class buttons
+for (var i=0; i<returnBtns.length; i++){
+    returnBtns[i].addEventListener("click", ()=>{ changeCard(lastCard); });
+}
