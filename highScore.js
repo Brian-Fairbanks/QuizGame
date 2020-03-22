@@ -2,9 +2,6 @@
 //========================================
 
 var highScores;
-// score exists in preceding scripts.js
-var userInput = document.getElementById("initialsInput");
-
 var maxScores = 10;
 
 // ========== Functions =================

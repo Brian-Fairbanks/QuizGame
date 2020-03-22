@@ -123,12 +123,12 @@ function updateTimer(){
 }
 
 function updateQuestionTimer(){
-    if(extraPoints<1){
+    if(extraPoints<.1){
         extraPoints=0;
         clearInterval(questionTimer);
         return
     }
-    extraPoints-=1;
+    extraPoints-=.5;
     //extraPointsSpan.textContent=extraPoints;
 
     var timePer = (extraPoints/questionStartPoints)*100;
@@ -227,7 +227,7 @@ function choiceMade(event){
     //Check Answer
     if(choice == curQuestion.answer){
         right+=1
-        score+=50+extraPoints; // base correct answer + timer per question, so that each correct answer can give bonus points if answered quickly
+        score+=50+Math.ceil(extraPoints); // base correct answer + timer per question, so that each correct answer can give bonus points if answered quickly
         answerSpan.textContent="Correct!";
         answerSpan.style.color="#050";
         questionCard.classList.add("correct");
