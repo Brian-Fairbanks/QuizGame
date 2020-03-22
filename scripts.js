@@ -74,6 +74,7 @@ var answersGiven=[];
 //question timer
 var questionTimer;
 var extraPoints;
+var extraPointBar = document.getElementById("extraPointBar");
 
 
 // ========== Functions =================
@@ -129,6 +130,9 @@ function updateQuestionTimer(){
     }
     extraPoints-=1;
     extraPointsSpan.textContent=extraPoints;
+
+    var timePer = (extraPoints/questionStartPoints)*100;
+    extraPointBar.style.width = timePer+"%";
 }
 
 function showResults(){

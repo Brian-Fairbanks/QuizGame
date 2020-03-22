@@ -11,13 +11,18 @@ body{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#505060', endColorstr='#303040',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-#timerBar{
+.timerBar{
     position:relative;
     border:1px solid #eee;
     width:200px;
     height:100%;
     border-radius:3px;
 }
+
+#extraPointBar{
+    background:#050;
+}
+
 
 .zind2{
     z-index:2;
