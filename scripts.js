@@ -2,7 +2,7 @@
 //========================================
 
 // Constants
-const startTime = 10;
+const startTime = 90;
 
 // Error card - should only ever be visable if JS is not enabled/loaded
 var errorCard = document.getElementById("error");
