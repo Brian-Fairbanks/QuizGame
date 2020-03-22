@@ -123,6 +123,11 @@ function updateTimer(){
 }
 
 function updateQuestionTimer(){
+    if(extraPoints%10==0){
+        var timePer = (extraPoints/questionStartPoints)*100;
+        extraPointBar.style.width = timePer+"%";
+    }
+
     if(extraPoints<.1){
         extraPoints=0;
         clearInterval(questionTimer);
@@ -130,9 +135,6 @@ function updateQuestionTimer(){
     }
     extraPoints-=.5;
     //extraPointsSpan.textContent=extraPoints;
-
-    var timePer = (extraPoints/questionStartPoints)*100;
-    extraPointBar.style.width = timePer+"%";
 }
 
 function showResults(){
