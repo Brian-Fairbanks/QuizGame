@@ -10,9 +10,11 @@ var maxScores = 10;
 // ========== Functions =================
 //========================================
 
-function clearhighScores(){
+function ClearhighScores(){
     highScores=[];
     localStorage.removeItem("highScoreList");
+
+    displayHighScores();
 }
 
 
@@ -37,8 +39,11 @@ function displayHighScores(){
     }
     highScoreInsert.appendChild(dscores);
 
-    var bestScore = highScores[0].score;
-    if (bestScore==undefined){bestScore = 0;}
+    var bestScore;
+    console.log(highScores);
+    if (highScores.length==0){bestScore = 0;}
+    else{bestScore = highScores[0].score;}
+    
     highestScore.textContent=bestScore;
 }
 
@@ -106,9 +111,17 @@ function submitHighScore(){
 // ========== Main ======================
 //========================================
 
-highScoresBtn.addEventListener("click",showScores);
+
 window.addEventListener("load", loadHighScores);
+
+highScoresBtn.addEventListener("click",showScores);
+
 submitScore.addEventListener("submit", (event)=>{
     event.preventDefault();
     submitHighScore();   
+});
+
+clearhighScores.addEventListener("click", (event)=>{
+    event.preventDefault();
+    ClearhighScores();   
 });

@@ -3,6 +3,7 @@
 
 // Constants
 const startTime = 90;
+const questionStartPoints = 50;
 
 // Error card - should only ever be visable if JS is not enabled/loaded
 var errorCard = document.getElementById("error");
@@ -22,6 +23,7 @@ var questionCard = document.getElementById("questions");
 var questionSpan = document.getElementById("questionSpan");
 var choiceSpan = document.getElementById("choiceSpan");
 var answerSpan = document.getElementById("answerSpan");
+var extraPointsSpan = document.getElementById("extraPointsSpan");
 var curQuestion;
 var choiceBtns;
 
@@ -31,6 +33,8 @@ var correctSpan = document.getElementById("correctSpan");
 var totalSpan = document.getElementById("totalSpan");
 var percentSpan = document.getElementById("percentSpan");
 var scoreSpan = document.getElementById("scoreSpan");
+var timeLeftSpan = document.getElementById("timeLeftSpan");
+var timePointsSpan = document.getElementById("timePointsSpan");
 var retryBtn = document.getElementById("retryBtn");
 var reviewBtn =  document.getElementById("reviewBtn");
 
@@ -44,7 +48,9 @@ var highScoreCard = document.getElementById("highScores");
 var highScoresBtn = document.getElementById("highScoresBtn");
 var highScoreInsert = document.getElementById("highScoreInsert");
 var highestScore = document.getElementById("highestScore");
+var userInput = document.getElementById("initialsInput");
 var submitScore = document.getElementById("submitScore");
+var clearhighScores = document.getElementById("clearhighScores");
 
 var submitScoreDiv = document.getElementById("submitScore");
 var scoreSubmittedDiv = document.getElementById("scoreSubmitted");
@@ -64,6 +70,10 @@ var right=0;
 var wrong=0;
 var questionsAsked=[];
 var answersGiven=[];
+
+//question timer
+var questionTimer;
+var extraPoints;
 
 
 // ========== Functions =================
@@ -111,13 +121,28 @@ function updateTimer(){
     time--;
 }
 
+function updateQuestionTimer(){
+    if(extraPoints<1){
+        extraPoints=0;
+        clearInterval(questionTimer);
+        return
+    }
+    extraPoints-=1;
+    extraPointsSpan.textContent=extraPoints;
+}
+
 function showResults(){
     //set up values for results
     // var scoreString = ""+right+"/"+(right+wrong)+"\n"+Math.floor((right/(right+wrong))*100)+"%";
     // scoreSpan.textContent = scoreString;
     
+    score+=(time*10);
+
     var total = right+wrong;
     var percent = (100*(right/total)).toFixed(2);
+
+    timeLeftSpan.textContent=time;
+    timePointsSpan.textContent=time*10;
 
     correctSpan.textContent=right;
     totalSpan.textContent=total;
@@ -185,6 +210,9 @@ function showIntro(){
 
 
 function choiceMade(event){
+    //stop questionTimer
+    clearInterval(questionTimer);
+
     //clear the right/wrong from the previous question, so it can be reset
     questionCard.classList.remove("correct","wrong");
 
@@ -195,7 +223,7 @@ function choiceMade(event){
     //Check Answer
     if(choice == curQuestion.answer){
         right+=1
-        score+=50; // come back later - write a timer per question, so that each correct answer can give bonus points if answered quickly
+        score+=50+extraPoints; // base correct answer + timer per question, so that each correct answer can give bonus points if answered quickly
         answerSpan.textContent="Correct!";
         answerSpan.style.color="#050";
         questionCard.classList.add("correct");
@@ -307,6 +335,9 @@ function nextQuestion(){
     for (var i = 0; i < choiceBtns.length; i++) {
         choiceBtns[i].addEventListener("click",choiceMade);
     }
+
+    extraPoints = questionStartPoints;
+    questionTimer = setInterval(updateQuestionTimer,100);
 }
 
 

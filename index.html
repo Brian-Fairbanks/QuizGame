@@ -82,6 +82,8 @@
                     </div>
                 </div>
                 <div class="card-footer bg-light text-center">
+                    Extra Points: <span id="extraPointsSpan"></span>
+                    <br>
                     <span id="answerSpan"></span>
                 </div>
             </div>
@@ -95,6 +97,10 @@
                     <p>This round is now over</p>
 
                     <div id="scoreDisplay">
+                        you finished with 
+                        <span id=timeLeftSpan></span>seconds left!: 
+                        <b>+ <span id="timePointsSpan"></span> points!</b>
+                        <br>
                         You got
                         <span id="correctSpan">X</span>
                         /
@@ -153,6 +159,7 @@
                 </div>
                 <div class="card-footer bg-dark text-light text-center">
                     <button class="btn btn-primary resultRtrn">Go Back</button>
+                    <button id="clearhighScores" class="btn btn-danger position-absolute">Clear High Scores</button>
                 </div>
             </div>
 

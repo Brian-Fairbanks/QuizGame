@@ -35,6 +35,10 @@ body{
     max-width:400px;
 }
 
+#clearhighScores{
+    right:3px;
+}
+
 .correct{
     box-shadow:0px 0px 40px #0f0;
 }
