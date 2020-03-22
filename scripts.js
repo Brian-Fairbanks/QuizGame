@@ -2,7 +2,7 @@
 //========================================
 
 // Constants
-const startTime = 90;
+const startTime = 10;
 
 // Error card - should only ever be visable if JS is not enabled/loaded
 var errorCard = document.getElementById("error");
@@ -37,6 +37,7 @@ var reviewBtn =  document.getElementById("reviewBtn");
 // review card and inputs
 var reviewCard = document.getElementById("review");
 var reviewDiv = document.getElementById("reviewDiv")
+var toResultsBtn = document.getElementById("toResultsBtn")
 
 // High Score Card and its Associated inputs
 var highScoreCard = document.getElementById("highScores");
@@ -109,7 +110,6 @@ function updateTimer(){
     //decrement the time;
     time--;
 }
-
 
 function showResults(){
     //set up values for results
@@ -335,6 +335,7 @@ window.addEventListener("load",changeCard(introCard));
 startBtn.addEventListener("click", startGame);
 retryBtn.addEventListener("click", showIntro);
 reviewBtn.addEventListener("click", showReview);
+toResultsBtn.addEventListener("click", showResults);
 
 // set up class buttons
 for (var i=0; i<returnBtns.length; i++){
