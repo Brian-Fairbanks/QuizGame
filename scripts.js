@@ -146,6 +146,7 @@ function showResults(){
 
     var total = right+wrong;
     var percent = (100*(right/total)).toFixed(2);
+    if(percent==undefined){percent="0.00"}
 
     timeLeftSpan.textContent=time;
     timePointsSpan.textContent=time*10;

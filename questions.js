@@ -84,5 +84,174 @@ const questions=[
         question: "What is the correct HTML for inserting an image?",
         choices: [ "<img src=\"image.gif\" alt=\"MyImage\">", "<image src=\"image.gif\" alt=\"MyImage\">", "<img href=\"image.gif\" alt=\"MyImage\">", "<img alt=\"MyImage\">image.gif</img>"],
         answer:0
+    },
+
+    /* CSS Questions */
+    {
+        question: "What does CSS stand for?",
+        choices:["Cascading Style Sheets","Colorful Style Sheets","Computer Style Sheets","Creative Style Sheets"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "What is the correct HTML for referring to an external style sheet?",
+        choices:["<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyle.css\">","<style src=\"mystyle.css\">","<stylesheet>mystyle.css</stylesheet>"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "Where in an HTML document is the correct place to refer to an external style sheet?",
+        choices:["In the <head> section","At the end of the document","In the <body> section"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "Which HTML tag is used to define an internal style sheet?",
+        choices:["<script>","<css>","<style>"],
+        answer: 2
+    },
+    
+    
+    {
+        question: "Which HTML attribute is used to define inline styles?",
+        choices:["style","font","class","styles"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "Which is the correct CSS syntax?",
+        choices:["{body:color=black;}","body:color=black;","{body;color:black;}","body {color: black;}"],
+        answer: 3
+    },
+    
+    
+    {
+        question: "How do you insert a comment in a CSS file?",
+        choices:["/* this is a comment */","// this is a comment //","' this is a comment","// this is a comment"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "Which property is used to change the background color?",
+        choices:["background-color","color","bgcolor"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "How do you add a background color for all <h1> elements?",
+        choices:["h1 {background-color:#FFFFFF;}","h1.all {background-color:#FFFFFF;}","all.h1 {background-color:#FFFFFF;}"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "Which CSS property is used to change the text color of an element?",
+        choices:["text-color","fgcolor","color"],
+        answer: 2
+    },
+    
+    
+    {
+        question: "Which CSS property controls the text size?",
+        choices:["font-style","text-size","font-size","text-style"],
+        answer: 2
+    },
+    
+    
+    {
+        question: "What is the correct CSS syntax for making all the <p> elements bold?",
+        choices:["<p style=\"font-size:bold;\">","<p style=\"text-size:bold;\">","p {font-weight:bold;}","p {text-size:bold;}"],
+        answer: 2
+    },
+    
+    
+    {
+        question: "How do you display hyperlinks without an underline?",
+        choices:["a {text-decoration:none;}","a {text-decoration:no-underline;}","a {decoration:no-underline;}","a {underline:none;}"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "How do you make each word in a text start with a capital letter?",
+        choices:["text-transform:capitalize","transform:capitalize","text-style:capitalize","You can't do that with CSS"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "Which property is used to change the font of an element?",
+        choices:["font-weight","font-family","font-style"],
+        answer: 1
+    },
+    
+    
+    {
+        question: "How do you make the text bold?",
+        choices:["font-weight:bold;","style:bold;","font:bold;"],
+        answer: 0
+    },
+    
+    
+    
+    {
+        question: "Which property is used to change the left margin of an element?",
+        choices:["indent","margin-left","padding-left"],
+        answer: 1
+    },
+    
+    
+    {
+        question: "When using the padding property; are you allowed to use negative values?",
+        choices:["No","Yes"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "How do you make a list that lists its items with squares?",
+        choices:["list: square;","list-type: square;","list-style-type: square;"],
+        answer: 2
+    },
+    
+    
+    {
+        question: "How do you select an element with id 'demo'?",
+        choices:["demo",".demo","#demo","*demo"],
+        answer: 2
+    },
+    
+    
+    {
+        question: "How do you select elements with class name 'test'?",
+        choices:["*test","test","#test",".test"],
+        answer: 3
+    },
+    
+    
+    {
+        question: "How do you select all p elements inside a div element?",
+        choices:["div.p","div + p","div p"],
+        answer: 2
+    },
+    
+    
+    {
+        question: "How do you group selectors?",
+        choices:["Separate each selector with a comma","Separate each selector with a plus sign","Separate each selector with a space"],
+        answer: 0
+    },
+    
+    
+    {
+        question: "What is the default value of the position property?",
+        choices:["relative","static","absolute","fixed"],
+        answer: 1
     }
 ]
