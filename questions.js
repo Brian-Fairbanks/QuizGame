@@ -1,14 +1,14 @@
 // these questions are stored in an array of objects
 const questions=[
-    {
-        question: "The answer is #3",
-        choices: ["choose not thou 1","neither choose thou 2","accepting then that thou choose 3","4 is right out"],
-        answer: 2 // remember that index start at 0
-    },
+    // {
+    //     question: "The answer is #3",
+    //     choices: ["choose not thou 1","neither choose thou 2","accepting then that thou choose 3","4 is right out"],
+    //     answer: 2 // remember that index start at 0
+    // },
     {
         question: "What does HTML stand for?",
         choices: ["Hyperlinks and Text Markdown Language","Hyper Text Markup Language","Home Tool Markdown Language", "Hyperlinked and Tooled Markup Language"],
-        answer: 1 
+        answer: 1 // remember that index start at 0
     },
     {
         question: "Who is making the Web standards?",

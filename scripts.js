@@ -37,6 +37,7 @@ var timeLeftSpan = document.getElementById("timeLeftSpan");
 var timePointsSpan = document.getElementById("timePointsSpan");
 var retryBtn = document.getElementById("retryBtn");
 var reviewBtn =  document.getElementById("reviewBtn");
+var timeRemainingDiv = document.getElementById("timeRemainingDiv");
 
 // review card and inputs
 var reviewCard = document.getElementById("review");
@@ -142,6 +143,10 @@ function showResults(){
     // var scoreString = ""+right+"/"+(right+wrong)+"\n"+Math.floor((right/(right+wrong))*100)+"%";
     // scoreSpan.textContent = scoreString;
     
+    if (time==0){
+        timeRemainingDiv.classList.add("hide");
+    }
+
     score+=(time*10);
 
     var total = right+wrong;
@@ -213,6 +218,7 @@ function showIntro(){
     //reset Submit Process
     submitScoreDiv.classList.toggle("hide");
     scoreSubmittedDiv.classList.toggle("hide");
+    timeRemainingDiv.classList.remove("hide");
 }
 
 
